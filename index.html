@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Fun Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .fact-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .fact-card:hover {
+            transform: scale(1.02);
+        }
+        .fact-title {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .share-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Amazing Programming Facts!</h1>
+    <div id="facts-container"></div>
+
+    <script>
+        const factsData = {
+            "programming_facts": [
+                {
+                    "id": 1,
+                    "fact": "First Computer Bug",
+                    "description": "In 1947, Grace Hopper and her team found an actual moth in the Mark II computer at Harvard",
+                    "verified": true,
+                    "year": 1947,
+                    "location": "Harvard University"
+                },
+                {
+                    "id": 2,
+                    "fact": "First Programmer",
+                    "description": "Ada Lovelace wrote the first algorithm for Babbage's Analytical Engine",
+                    "verified": true,
+                    "year": 1840,
+                    "historical_figure": "Ada Lovelace"
+                },
+                {
+                    "id": 3,
+                    "fact": "ASCII Trivia",
+                    "description": "The ASCII value of 'A' is 65 (01000001 in binary)",
+                    "verified": true,
+                    "technical_detail": "01000001"
+                },
+                {
+                    "id": 4,
+                    "fact": "Python Name Origin",
+                    "description": "Python was named after Monty Python, not the snake",
+                    "verified": true,
+                    "creator": "Guido van Rossum"
+                }
+            ]
+        };
+
+        function displayFacts() {
+            const container = document.getElementById('facts-container');
+            factsData.programming_facts.forEach(fact => {
+                const factCard = document.createElement('div');
+                factCard.className = 'fact-card';
+                factCard.innerHTML = `
+                    <h2 class="fact-title">${fact.fact}</h2>
+                    <p>${fact.description}</p>
+                    <button class="share-button" onclick="shareFact('${fact.fact}: ${fact.description}')">
+                        Share This Fact
+                    </button>
+                `;
+                container.appendChild(factCard);
+            });
+        }
+
+        function shareFact(factText) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Programming Fun Fact',
+                    text: factText,
+                    url: window.location.href
+                })
+                .catch(error => console.log('Error sharing:', error));
+            } else {
+                alert('Share feature not supported in your browser');
+            }
+        }
+
+        window.onload = displayFacts;
+    </script>
+</body>
+</html>
